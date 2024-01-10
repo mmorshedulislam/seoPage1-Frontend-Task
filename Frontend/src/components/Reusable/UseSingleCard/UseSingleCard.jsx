@@ -71,12 +71,12 @@ const UseSingleCard = () => {
           <span className="flex gap-1 items-center">
             <PiChatsCircleThin size={22} /> 15
           </span>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex gap-1 items-center"
-          >
-            <GrAttachment size={18} /> 25
-          </button>
+          <span className="flex gap-1 items-center">
+            <button onClick={() => setIsModalOpen(true)}>
+              <GrAttachment size={18} />
+            </button>
+            25
+          </span>
           <span className="flex gap-1 items-center">
             <SlCalender size={18} />
             10-10-2024
