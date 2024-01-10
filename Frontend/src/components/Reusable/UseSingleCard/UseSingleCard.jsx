@@ -3,8 +3,12 @@ import { MdOutlineContentPaste } from "react-icons/md";
 import { PiChatsCircleThin } from "react-icons/pi";
 import { GrAttachment } from "react-icons/gr";
 import { SlCalender } from "react-icons/sl";
+import UseModal from "../UseModal/UseModal";
+import { useState } from "react";
+import AddAttachment from "../../AddAttachment/AddAttachment";
 
 const UseSingleCard = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="w-[400px] h-auto bg-[#FFFFFF] border p-4 rounded-md my-4">
       <div className="flex justify-between">
@@ -26,7 +30,7 @@ const UseSingleCard = () => {
               alt=""
             />
           </div>
-          <h3 className="font-bold">Sadik Istiak</h3>
+          <h3 className="font-bold">Hasan Hafizul</h3>
         </div>
       </div>
 
@@ -65,17 +69,28 @@ const UseSingleCard = () => {
         </div>
         <div className="flex items-center gap-3 font-semibold">
           <span className="flex gap-1 items-center">
-            <PiChatsCircleThin size={22}/> 15
+            <PiChatsCircleThin size={22} /> 15
           </span>
-          <button className="flex gap-1 items-center">
-            <GrAttachment size={18}/> 25
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex gap-1 items-center"
+          >
+            <GrAttachment size={18} /> 25
           </button>
           <span className="flex gap-1 items-center">
-            <SlCalender size={18}/>
+            <SlCalender size={18} />
             10-10-2024
           </span>
         </div>
       </div>
+      <UseModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        modalTitle="Add Attachment"
+        modalWidth={800}
+      >
+        <AddAttachment />
+      </UseModal>
     </div>
   );
 };

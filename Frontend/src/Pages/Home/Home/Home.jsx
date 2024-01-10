@@ -1,4 +1,4 @@
-import UseCardContainer from "../../../components/UseCardContainer/UseCardContainer";
+import UseCardContainer from "../../../components/Reusable/UseCardContainer/UseCardContainer";
 
 const Home = () => {
   return (

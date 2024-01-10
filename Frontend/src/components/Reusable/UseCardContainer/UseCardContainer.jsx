@@ -1,5 +1,5 @@
 import { string } from "prop-types";
-import UseSingleCard from "../Reusable/UseSingleCard/UseSingleCard";
+import UseSingleCard from "../UseSingleCard/UseSingleCard";
 
 const UseCardContainer = ({ bgColor, title }) => {
   return (
