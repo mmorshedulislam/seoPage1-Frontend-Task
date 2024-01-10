@@ -6,9 +6,11 @@ import { SlCalender } from "react-icons/sl";
 import UseModal from "../UseModal/UseModal";
 import { useState } from "react";
 import AddAttachment from "../../AddAttachment/AddAttachment";
+import { useGetCountQuery } from "../../../features/API/uploadApi/uploadApi";
 
 const UseSingleCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data } = useGetCountQuery();
   return (
     <div className="w-[400px] h-auto bg-[#FFFFFF] border p-4 rounded-md my-4">
       <div className="flex justify-between">
@@ -75,7 +77,7 @@ const UseSingleCard = () => {
             <button onClick={() => setIsModalOpen(true)}>
               <GrAttachment size={18} />
             </button>
-            25
+            {data?.count}
           </span>
           <span className="flex gap-1 items-center">
             <SlCalender size={18} />

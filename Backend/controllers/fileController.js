@@ -1,20 +1,20 @@
-// controllers/fileController.js
-
 const File = require("../models/File");
 
 exports.uploadFiles = async (req, res) => {
   try {
     const uploadedFiles = req.files.map((file) => {
-      const originalname = file.originalname;
-      const extension = file.filename.split(".").pop();
-      return { originalname, extension };
+      return {
+        originalname: file.originalname,
+        extension: file.filename.split(".").pop(),
+        // Assuming you have a 'files' collection in MongoDB
+        // You may want to store the file path or URL instead of the buffer
+        content: file.buffer, 
+      };
     });
 
-    await File.insertMany(uploadedFiles); // Assuming you have a model named 'File'
+    await File.insertMany(uploadedFiles);
 
-    res
-      .status(201)
-      .json({ success: true, message: "Files uploaded successfully" });
+    res.status(201).json({ success: true, message: "Files uploaded successfully" });
   } catch (error) {
     console.error("Error uploading files:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });

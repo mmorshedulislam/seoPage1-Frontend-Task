@@ -1,11 +1,14 @@
-import { useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useStorePhotosMutation } from "../../features/API/uploadApi/uploadApi";
 
 const AddAttachment = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  // RTK mutation
+  const [storePhotos, { isLoading, isError, error, isSuccess, data }] =
+    useStorePhotosMutation();
 
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -31,26 +34,26 @@ const AddAttachment = () => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const formData = new FormData();
-      selectedFiles.forEach((file) => {
-        formData.append("files", file);
-      });
+    const formData = new FormData();
+    selectedFiles.forEach((file) => {
+      formData.append("files", file);
+    });
+    // with RTK
+    storePhotos(formData);
+  };
 
-      setIsLoading(true);
-      const res = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_PORT}/api/files/upload`,
-        formData
-      );
-      
-      toast.success(res?.data?.message);
-      setIsLoading(false);
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message);
       setSelectedFiles([]);
       setPreviewImages([]);
-    } catch (error) {
-      console.error("Error submitting files:", error);
     }
-  };
+    if (isError) {
+      toast.error(error?.error || error?.status);
+    }
+  }, [isSuccess, data, isError, error]);
+
+  console.log(error);
 
   return (
     <div>
@@ -103,6 +106,7 @@ const AddAttachment = () => {
       <button
         className="bg-[#006EB9] text-white px-4 py-2 rounded-md font-semibold block w-full"
         type="submit"
+        disabled={isLoading}
         onClick={handleSubmit}
       >
         {isLoading ? "Uploading..." : "Upload"}

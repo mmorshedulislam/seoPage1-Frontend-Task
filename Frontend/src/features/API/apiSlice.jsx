@@ -6,6 +6,7 @@ const apiSlice = createApi({
     baseUrl: import.meta.env.VITE_REACT_APP_PORT,
   }),
   endpoints: (builder) => ({}),
+  tagTypes: ["Upload"],
 });
 
 export default apiSlice;
