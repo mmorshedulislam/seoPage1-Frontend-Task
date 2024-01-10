@@ -1,5 +1,3 @@
-// routes/fileRoutes.js
-
 const express = require("express");
 const multer = require("multer");
 const fileController = require("../controllers/fileController");
@@ -19,7 +17,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/upload", upload.single("file"), fileController.uploadFile);
+// Use upload.array() to handle multiple files
+router.post("/upload", upload.array("files", 5), fileController.uploadFiles); // "files" is the field name in the form
+
 router.get("/count", fileController.countFiles);
 
 module.exports = router;

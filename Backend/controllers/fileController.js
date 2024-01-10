@@ -1,25 +1,31 @@
 // controllers/fileController.js
+
 const File = require("../models/File");
 
-exports.uploadFile = async (req, res) => {
+exports.uploadFiles = async (req, res) => {
   try {
-    const { filename, originalname, extension } = req.file;
-    const newFile = new File({ filename, originalname, extension });
-    await newFile.save();
+    const uploadedFiles = req.files.map((file) => {
+      const originalname = file.originalname;
+      const extension = file.filename.split(".").pop();
+      return { originalname, extension };
+    });
 
-    res.status(201).json({ message: "File uploaded successfully" });
+    await File.insertMany(uploadedFiles); // Assuming you have a model named 'File'
+
+    res
+      .status(201)
+      .json({ success: true, message: "Files uploaded successfully" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error uploading files:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
 exports.countFiles = async (req, res) => {
   try {
-    const fileCount = await File.countDocuments();
-    res.status(200).json({ count: fileCount });
+    const count = await File.countDocuments();
+    res.json({ success: true, count });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
