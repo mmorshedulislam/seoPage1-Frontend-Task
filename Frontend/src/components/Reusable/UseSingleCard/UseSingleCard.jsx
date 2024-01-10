@@ -77,7 +77,7 @@ const UseSingleCard = () => {
             <button onClick={() => setIsModalOpen(true)}>
               <GrAttachment size={18} />
             </button>
-            {data?.count}
+            {data?.count || 25}
           </span>
           <span className="flex gap-1 items-center">
             <SlCalender size={18} />
